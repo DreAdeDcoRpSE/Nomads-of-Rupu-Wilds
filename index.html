@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Last Oasis — Clan Packages</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<script>
+// 🧹 ONE-TIME CACHE CLEAR — remove this line after first load
+localStorage.removeItem('lo_clan_rates');
+</script>
+<style>
+/* ═══════════════════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════════════════ */
+:root {
+  --glass-bg:      rgba(255,255,255,0.04);
+  --glass-bg-2:    rgba(255,255,255,0.07);
+  --glass-bg-3:    rgba(255,255,255,0.11);
+  --glass-border:  rgba(255,255,255,0.10);
+  --glass-border-2:rgba(255,255,255,0.18);
+  --blur:          blur(18px);
+  --blur-heavy:    blur(32px);
+
+  --deep:    #04060f;
+  --dark:    #070b18;
+  --mid:     #0c1225;
+  --text:    #d4dff5;
+  --text-dim:#83b7d6;
+  --text-xs: #90b5ff;
+
+  --amber:   #f5a623;
+  --amber2:  #ffd166;
+  --teal:    #1de3c6;
+  --teal2:   #7fffd4;
+  --crimson: #ff3f6c;
+
+  --common:    #b0bec5;
+  --uncommon:  #00FF00;
+  --rare:      #3498db;
+  --epic:      #FF00FF;
+  --legendary: #f5a623;
+
+  --font-d: 'Orbitron', monospace;
+  --font-b: 'Exo 2', sans-serif;
+  --r: 14px;
+  --r-sm: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-b);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--deep);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ANIMATED BACKGROUND
+═══════════════════════════════════════════════════════ */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 15%, rgba(245,166,35,0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 80% 80%, rgba(29,227,198,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 40% at 50% 50%, rgba(52,152,219,0.05) 0%, transparent 70%);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: drift 20s ease-in-out infinite;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  top: -200px; left: -150px;
+  background: radial-gradient(circle, rgba(245,166,35,0.3), transparent 70%);
+  animation-duration: 25s;
+}
+.orb-2 {
+  width: 500px; height: 500px;
+  bottom: -100px; right: -100px;
+  background: radial-gradient(circle, rgba(29,227,198,0.25), transparent 70%);
+  animation-duration: 30s;
+  animation-delay: -10s;
+}
+.orb-3 {
+  width: 400px; height: 400px;
+  top: 40%; left: 50%;
+  background: radial-gradient(circle, rgba(52,152,219,0.2), transparent 70%);
+  animation-duration: 20s;
+  animation-delay: -5s;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(40px, -30px) scale(1.05); }
+  66%       { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════ */
+#app { position: relative; z-index: 1; }
+
+/* ═══════════════════════════════════════════════════════
+   BANNER / HERO IMAGE
+═══════════════════════════════════════════════════════ */
+.banner-wrap {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.banner {
+  width: 100%;
+  height: auto;
+  display: block;
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+/* Overlay text on banner (desktop: overlaid, mobile: below) */
+.banner-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 12px 24px;
+  background: rgba(4,6,15,0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r);
+  backdrop-filter: var(--blur);
+  max-width: 90%;
+  transition: all 0.3s ease;
+}
+
+/* ─── MOBILE: Move overlay BELOW banner at 900px and under ─── */
+@media (max-width: 900px) {
+  .banner-overlay {
+    position: static;        /* Remove absolute positioning */
+    transform: none;         /* Reset centering transform */
+    margin: 16px auto 0;     /* Add spacing below banner */
+    max-width: 90%;          /* Keep width constrained */
+    padding: 14px 20px;
+  }
+
+  .banner-wrap {
+    padding-bottom: 0;       /* Reset any bottom padding */
+  }
+}
+
+.banner-title {
+  font-family: var(--font-d);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.banner-title span {
+  background: linear-gradient(135deg, var(--amber), var(--amber2), var(--teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.banner-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-weight: 300;
+}
+
+/* Note box below banner */
+.banner-note {
+  max-width: 1920px;
+  margin: 16px auto 0;
+  padding: 0 24px;
+  text-align: center;
+}
+.note {
+  font-size: 12px;
+  color: var(--text-xs);
+  font-style: italic;
+  padding: 10px 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-sm);
+  display: inline-block;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PACKAGE GRID
+═══════════════════════════════════════════════════════ */
+.packages {
+  padding: 24px 24px 60px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PACKAGE CARD
+═══════════════════════════════════════════════════════ */
+.package-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  animation: card-in 0.4s ease both;
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.package-card:hover {
+  transform: translateY(-4px);
+  background: var(--glass-bg-2);
+  border-color: var(--glass-border-2);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* Tier badge */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: var(--font-d);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #05070e;
+  width: fit-content;
+}
+.tier-1 { background: var(--common); }
+.tier-2 { background: var(--uncommon); }
+.tier-3 { background: var(--rare); }
+.tier-4 { background: var(--epic); }
+.tier-5 { background: var(--legendary); }
+
+/* Package name & price */
+.package-name {
+  font-family: var(--font-d);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.package-price {
+  font-family: var(--font-d);
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--amber2);
+}
+
+/* Contents list */
+.package-contents {
+  list-style: none;
+  font-size: 14px;
+  color: var(--text-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.package-contents li {
+  position: relative;
+  padding-left: 16px;
+}
+.package-contents li::before {
+  content: '⬡';
+  position: absolute;
+  left: 0;
+  color: var(--amber);
+  font-size: 9px;
+  top: 3px;
+}
+
+/* Donate button */
+.btn-donate {
+  margin-top: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(0,112,243,0.2), rgba(0,112,243,0.1));
+  border: 1px solid rgba(0,112,243,0.4);
+  border-radius: var(--r-sm);
+  color: #4fa3ff;
+  font-family: var(--font-d);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: fit-content;
+}
+.btn-donate:hover {
+  background: linear-gradient(135deg, rgba(0,112,243,0.35), rgba(0,112,243,0.2));
+  border-color: rgba(0,112,243,0.7);
+  color: #7fc1ff;
+  box-shadow: 0 0 20px rgba(0,112,243,0.25);
+  transform: translateY(-1px);
+}
+.btn-donate:active { transform: translateY(0); }
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════ */
+footer {
+  text-align: center;
+  padding: 24px;
+  border-top: 1px solid var(--glass-border);
+  background: rgba(4,6,15,0.4);
+  backdrop-filter: var(--blur);
+}
+footer p {
+  font-size: 11px;
+  color: var(--text-xs);
+  letter-spacing: 1px;
+}
+footer span { color: var(--amber); }
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .packages { padding: 16px 16px 40px; }
+  .banner-note { padding: 0 16px; }
+  .btn-donate { width: 100%; justify-content: center; }
+  .banner-overlay {
+    bottom: 12px;
+    padding: 8px 16px;
+    max-width: 95%;
+  }
+  .banner-title { font-size: 1.3rem; }
+  .banner-sub { font-size: 11px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   CONFIRMATION MODAL
+═══════════════════════════════════════════════════════ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(4,6,15,0.85);
+  backdrop-filter: var(--blur-heavy);
+  -webkit-backdrop-filter: var(--blur-heavy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-glass {
+  background: rgba(10,14,28,0.92);
+  border: 1px solid var(--glass-border-2);
+  border-radius: var(--r);
+  backdrop-filter: var(--blur-heavy);
+  max-width: 520px;
+  width: 100%;
+  padding: 28px;
+  position: relative;
+  transform: scale(0.96) translateY(10px);
+  transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.modal-backdrop.open .modal-glass {
+  transform: scale(1) translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  color: var(--text-dim);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.modal-close:hover {
+  background: var(--glass-bg-2);
+  color: var(--text);
+  border-color: var(--glass-border-2);
+}
+
+.modal-title {
+  font-family: var(--font-d);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--amber2);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.modal-body {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.modal-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.modal-highlight {
+  display: block;
+  margin: 14px 0;
+  padding: 12px 16px;
+  background: rgba(245,166,35,0.08);
+  border: 1px solid rgba(245,166,35,0.25);
+  border-left: 3px solid var(--amber);
+  border-radius: var(--r-sm);
+  color: var(--amber2);
+  font-weight: 500;
+}
+
+.modal-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-sm);
+  margin-bottom: 24px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.modal-check:hover {
+  background: var(--glass-bg-2);
+  border-color: var(--glass-border-2);
+}
+.modal-check input {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--amber);
+  cursor: pointer;
+}
+.modal-check label {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.modal-check label strong {
+  color: var(--text);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btn-modal {
+  padding: 10px 24px;
+  border-radius: var(--r-sm);
+  font-family: var(--font-d);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid;
+}
+
+.btn-cancel {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+  color: var(--text-dim);
+}
+.btn-cancel:hover {
+  background: var(--glass-bg-2);
+  border-color: var(--glass-border-2);
+  color: var(--text);
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, rgba(29,227,198,0.2), rgba(29,227,198,0.1));
+  border-color: rgba(29,227,198,0.4);
+  color: var(--teal);
+}
+.btn-confirm:hover {
+  background: linear-gradient(135deg, rgba(29,227,198,0.35), rgba(29,227,198,0.2));
+  border-color: var(--teal);
+  color: var(--teal2);
+  box-shadow: 0 0 20px rgba(29,227,198,0.25);
+}
+.btn-confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+/* Responsive modal */
+@media (max-width: 600px) {
+  .modal-glass {
+    padding: 24px 20px;
+    margin: 0 8px;
+  }
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+  .btn-modal {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Converted currency display */
+.package-price-converted {
+  font-family: var(--font-b);
+  font-size: 11px;
+  color: var(--text-xs);
+  margin-top: 2px;
+  line-height: 1.6;
+}
+.package-price-converted .cv-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.package-price-converted .cv-label {
+  font-family: var(--font-d);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--teal);
+  min-width: 32px;
+}
+.package-price-converted .cv-value {
+  color: var(--text-dim);
+}
+.package-price-converted .cv-note {
+  font-size: 14px;
+  color: var(--text-xs);
+  font-style: italic;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Loading state for rates */
+.rate-loading {
+  font-size: 10px;
+  color: var(--text-xs);
+  font-style: italic;
+  margin-top: 4px;
+}
+.rate-loading::after {
+  content: '⬡';
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  margin-left: 4px;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   CURRENCY TOOLTIP — FIXED POSITIONING
+═══════════════════════════════════════════════════════ */
+.package-price {
+  position: relative;
+  cursor: help;
+  display: inline-block;
+}
+
+.currency-tooltip {
+  position: absolute;
+  /* ✅ Position ABOVE the price */
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(10,14,28,0.95);
+  border: 1px solid var(--glass-border-2);
+  border-radius: var(--r);
+  backdrop-filter: var(--blur-heavy);
+  padding: 16px 20px;
+  min-width: 350px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 100;
+  box-shadow:
+    0 12px 40px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* ✅ Arrow pointing DOWN to price */
+.currency-tooltip::before {
+  content: '';
+  position: absolute;
+  top: 100%;  /* Arrow at bottom of tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: rgba(10,14,28,0.95); /* Points down */
+}
+
+/* Show tooltip on hover */
+.package-price:hover .currency-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* ✅ Flipped class: tooltip below price (for edge cases) */
+.currency-tooltip.flipped {
+  bottom: auto;
+  top: calc(100% + 14px);
+  transform: translateX(-50%) translateY(-10px);
+}
+.currency-tooltip.flipped::before {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: rgba(10,14,28,0.95); /* Points up */
+}
+.currency-tooltip.flipped {
+  transform: translateX(-50%) translateY(0);
+}
+.package-price:hover .currency-tooltip.flipped {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Tooltip content (unchanged) */
+.currency-tooltip-title {
+  font-family: var(--font-d);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--glass-border);
+  text-align: center;
+}
+.currency-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 15px;
+  border-bottom: 1px dashed rgba(255,255,255,0.05);
+}
+.currency-row:last-child { border-bottom: none; }
+.currency-code {
+  font-family: var(--font-d);
+  font-weight: 700;
+  color: var(--amber);
+  letter-spacing: 1px;
+}
+.currency-value {
+  color: var(--text);
+  font-weight: 600;
+}
+.currency-note {
+  font-size: 10px;
+  color: var(--text-xs);
+  text-align: center;
+  margin-top: 10px;
+  font-style: italic;
+}
+.tooltip-loading {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 12px 0;
+}
+.tooltip-loading::after {
+  content: '⬡';
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  margin-left: 6px;
+}
+
+/* Mobile: tap to show */
+@media (hover: none) {
+  .package-price { cursor: pointer; }
+  .package-price.active .currency-tooltip {
+    opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+  .currency-tooltip { min-width: 180px; padding: 14px 16px; }
+  .currency-row { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Animated Background -->
+<div class="bg-layer">
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div id="app">
+
+  <!-- ═══ BANNER IMAGE ═══ -->
+  <div class="banner-wrap">
+    <picture>
+      <!-- Mobile banner (≤900px) -->
+      <source
+        media="(max-width: 900px)"
+        srcset="https://raw.githubusercontent.com/DreAdeDcoRpSE/lo-admin-tool-assets/refs/heads/main/banner-sm.jpg"
+      />
+      <!-- Desktop banner (>900px) -->
+      <source
+        media="(min-width: 901px)"
+        srcset="https://raw.githubusercontent.com/DreAdeDcoRpSE/lo-admin-tool-assets/refs/heads/main/banner.jpg"
+      />
+      <!-- Fallback image -->
+      <img
+        src="https://raw.githubusercontent.com/DreAdeDcoRpSE/lo-admin-tool-assets/refs/heads/main/banner.jpg"
+        alt="Last Oasis Clan Packages Banner"
+        class="banner"
+      />
+    </picture>
+    <!-- Optional overlay text — delete this entire div if you want pure image -->
+    <div class="banner-overlay">
+      <div class="banner-title">Clan <span>Packages</span></div>
+      <div class="banner-sub">Voluntary donations • In-game delivery • All walkers fully upgraded</div>
+    </div>
+  </div>
+
+  <!-- Note below banner -->
+  <div class="banner-note">
+    <div class="note">
+      ⚠️ Note: All walkers are fully upgraded with gold legs & wings. Leg & wing types are buyer's choice.
+    </div>
+    <div style="margin-top:8px;font-size:12px;color:var(--text-xs);font-style:italic">
+      💱 Currency rates update automatically • Last updated: <span id="rateTimestamp">loading...</span>
+    </div>
+  </div>
+
+  <!-- Packages Grid -->
+  <section class="packages">
+    <div class="grid">
+
+      <!-- Tier 1: $5-$7 -->
+      <div class="package-card" style="animation-delay:0.05s">
+        <span class="tier-badge tier-1">Tier 1 • $5</span>
+        <div class="package-name">1. The Nomad's Start</div>
+        <div class="package-price" data-usd="5">
+          $5
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>2,000 Gold Resource Credits</li>
+          <li>1x Gold Ceramic Tool Set (Pickaxe, Axe, Sickle)</li>
+          <li>1x Gold Large Chest</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="5" data-name="The Nomad's Start">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <div class="package-card" style="animation-delay:0.1s">
+        <span class="tier-badge tier-1">Tier 1 • $5</span>
+        <div class="package-name">2. The Warrior's Boost</div>
+        <div class="package-price" data-usd="5">
+          $5
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>1,000 Gold Resource Credits</li>
+          <li>1x Gold Singblade</li>
+          <li>1x Gold Forester Armor Set</li>
+          <li>1x Gold Large Chest</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="5" data-name="The Warrior's Boost">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <div class="package-card" style="animation-delay:0.15s">
+        <span class="tier-badge tier-1">Tier 1 • $7</span>
+        <div class="package-name">3. The Spider Walker Credit</div>
+        <div class="package-price" data-usd="7">
+          $7
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>3,000 Gold Resource Credits</li>
+          <li>1x Spider Walker <span style="color:var(--text-xs)">⬡ fully upgraded, gold legs & wings</span></li>
+          <li>1x Gold Large Chest</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="7" data-name="Spider Walker Credit">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <!-- Tier 2: $10-$12 -->
+      <div class="package-card" style="animation-delay:0.2s">
+        <span class="tier-badge tier-2">Tier 2 • $10</span>
+        <div class="package-name">4. The Fighter's Stash</div>
+        <div class="package-price" data-usd="10">
+          $10
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>5,000 Gold Resource Credits</li>
+          <li>2x Iron Weapon of Choice</li>
+          <li>1x Armor Set of your choice (excl. Nibirum)</li>
+          <li>1x Gold Large Chest</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="10" data-name="The Fighter's Stash">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <div class="package-card" style="animation-delay:0.25s">
+        <span class="tier-badge tier-2">Tier 2 • $10</span>
+        <div class="package-name">5. The Walker Credit</div>
+        <div class="package-price" data-usd="10">
+          $10
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>5,000 Gold Resource Credits</li>
+          <li>1x Dinghy, Mollusk, Stiletto, or Balang Walker <span style="color:var(--text-xs)">⬡ w/ T3 RIG, gold legs & wings</span></li>
+          <li>1x Gold Large Chest</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="10" data-name="Walker Credit">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <div class="package-card" style="animation-delay:0.3s">
+        <span class="tier-badge tier-2">Tier 2 • $12</span>
+        <div class="package-name">6. The Shopping Cart</div>
+        <div class="package-price" data-usd="12">
+          $12
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>6,000 Gold Resource Credits</li>
+          <li>1x Toboggan Walker <span style="color:var(--text-xs)">⬡ w/ T3 RIG, gold legs & wings</span></li>
+          <li>1x Gold Large Chest</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="12" data-name="The Shopping Cart">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <!-- Tier 3: $15-$17 -->
+      <div class="package-card" style="animation-delay:0.35s">
+        <span class="tier-badge tier-3">Tier 3 • $15</span>
+        <div class="package-name">7. The Raptor</div>
+        <div class="package-price" data-usd="15">
+          $15
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>1x Raptor Walker <span style="color:var(--text-xs)">⬡ w/ T3 RIG, gold legs & wings</span></li>
+          <li>20x Watery Walker Modules</li>
+          <li>20x Torque Walker Modules</li>
+          <li>Pre-filled with torque & water</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="15" data-name="The Raptor">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <div class="package-card" style="animation-delay:0.4s">
+        <span class="tier-badge tier-3">Tier 3 • $17</span>
+        <div class="package-name">8. The Turtle Walker Credit</div>
+        <div class="package-price" data-usd="17">
+          $17
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>10,000 Gold Resource Credits</li>
+          <li>1x Silur Walker <span style="color:var(--text-xs)">⬡ fully upgraded, gold legs & wings</span></li>
+          <li>1x Gold Gigantic Chest</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="17" data-name="Turtle Walker Credit">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <!-- Tier 4: $20 -->
+      <div class="package-card" style="animation-delay:0.45s">
+        <span class="tier-badge tier-4">Tier 4 • $20</span>
+        <div class="package-name">9. The Clan Leader's Cache</div>
+        <div class="package-price" data-usd="20">
+          $20
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>15,000 Gold Resource Credits</li>
+          <li>1x Choice of Buffalo, Falco, or Hornet Walker <span style="color:var(--text-xs)">⬡ fully upgraded, gold legs & wings</span></li>
+          <li>100 Modules of your choice</li>
+          <li>1x Gold Gigantic Chest</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="20" data-name="Clan Leader's Cache">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <!-- Tier 5: $50 -->
+      <div class="package-card" style="animation-delay:0.5s">
+        <span class="tier-badge tier-5">Tier 5 • $50</span>
+        <div class="package-name">10. The End Game Cache</div>
+        <div class="package-price" data-usd="50">
+          $50
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>50,000 Gold Resource Credits</li>
+          <li>1x Choice of Titian, Schmetterling, Domus, or Tusker Walker <span style="color:var(--text-xs)">⬡ fully upgraded, gold legs & wings</span></li>
+          <li>100 Modules of your choice</li>
+          <li>3x Gold Gigantic Chests</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="50" data-name="End Game Cache">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p><span>⬡</span> Nomads of the Rupu Wilds &nbsp;·&nbsp; Not affiliated with Donkey Crew LLC &nbsp;·&nbsp; All donations are voluntary</p>
+  </footer>
+
+  <!-- ═══ CONFIRMATION MODAL ═══ -->
+  <div class="modal-backdrop" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-glass">
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+
+      <div class="modal-title" id="modalTitle">⬡ Confirm Donation</div>
+
+      <div class="modal-body">
+        <p>You are about to donate <strong id="modalAmount">$X</strong> for:</p>
+        <p style="color:var(--amber2);font-weight:600;margin:8px 0;" id="modalItem">Package Name</p>
+
+        <div class="modal-highlight">
+          ⚠️ <strong>Important Instructions:</strong><br>
+          After completing your PayPal donation, go to our Discord server and open a ticket in <strong>#tickets</strong> using the pinned message format. An admin will verify your donation and deliver your items in-game.
+        </div>
+
+        <p style="font-size:12px;color:var(--text-xs);margin-top:16px;">
+          💡 <strong>PayPal Tip:</strong> If available, select "Friends and Family" at checkout to avoid fees. This option depends on the recipient's account type.
+        </p>
+      </div>
+
+      <label class="modal-check" id="confirmCheckWrap">
+        <input type="checkbox" id="confirmCheck" />
+        <span>I have read and understand the instructions above. I will submit a Discord ticket after donating.</span>
+      </label>
+
+      <div class="modal-actions">
+        <button class="btn-modal btn-cancel" id="modalCancel">Cancel</button>
+        <button class="btn-modal btn-confirm" id="modalConfirm" disabled>Confirm & Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   CURRENCY CONVERTER (TOOLTIP VERSION)
+════════════════════════════════════════ */
+const CURRENCY_CONFIG = {
+  base: 'USD',
+  target: ['EUR', 'GBP', 'CAD', 'RUB', 'UAH', 'AUD'],
+  api: 'https://open.er-api.com/v6/latest/USD',
+  cacheKey: 'lo_clan_rates',
+  cacheTTL: 10 * 60 * 1000,
+};
+
+const CURRENCY_SYMBOLS = {
+  EUR: '€', GBP: '£', CAD: 'C$',
+  RUB: '₽', UAH: '₴', AUD: 'A$'
+};
+
+function roundUp(num) { return Math.ceil(num); }
+
+async function getRates() {
+  const cached = localStorage.getItem(CURRENCY_CONFIG.cacheKey);
+
+  if (cached) {
+    try {
+      const { rates, timestamp } = JSON.parse(cached);
+      const hasAll = CURRENCY_CONFIG.target.every(c => rates[c] !== undefined);
+      if (hasAll && Date.now() - timestamp < CURRENCY_CONFIG.cacheTTL) {
+        return rates;
+      }
+    } catch (e) { console.warn('Cache parse error'); }
+  }
+
+  try {
+    const res = await fetch(CURRENCY_CONFIG.api);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+
+    const rates = {};
+    CURRENCY_CONFIG.target.forEach(c => {
+      if (data.rates?.[c]) rates[c] = data.rates[c];
+    });
+
+    if (Object.keys(rates).length === 0) throw new Error('No rates');
+
+    localStorage.setItem(CURRENCY_CONFIG.cacheKey, JSON.stringify({
+      rates, timestamp: Date.now()
+    }));
+
+    return rates;
+  } catch (err) {
+    console.warn('Currency API failed, using fallback', err);
+    return { EUR:0.92, GBP:0.79, CAD:1.36, RUB:92, UAH:41, AUD:1.52 };
+  }
+}
+
+function renderTooltip(tooltipEl, usdAmount, rates) {
+  if (!tooltipEl || !rates) return;
+
+  let html = '<div class="currency-tooltip-title">💱 Convert to Your Currency</div>';
+
+  CURRENCY_CONFIG.target.forEach(curr => {
+    if (rates[curr]) {
+      const converted = roundUp(usdAmount * rates[curr]);
+      const symbol = CURRENCY_SYMBOLS[curr] || curr;
+      html += `
+        <div class="currency-row">
+          <span class="currency-code">${curr}</span>
+          <span class="currency-value">${symbol}${converted.toLocaleString()}</span>
+        </div>
+      `;
+    }
+  });
+
+  html += `<div class="currency-note">≈ rounded up • ⚠ RUB/UAH rates are approximate • PayPal processes in USD</span>`
+  tooltipEl.innerHTML = html;
+}
+
+async function initCurrencyConverter() {
+  console.log('💱 Loading currency rates...');
+  const rates = await getRates();
+  console.log('💱 Available:', Object.keys(rates));
+
+  // Find all prices with data-usd attribute
+  document.querySelectorAll('.package-price[data-usd]').forEach(priceEl => {
+    const usd = parseFloat(priceEl.dataset.usd);
+    const tooltip = priceEl.querySelector('.currency-tooltip');
+
+    if (!isNaN(usd) && tooltip) {
+      renderTooltip(tooltip, usd, rates);
+    }
+  });
+
+  // Update timestamp
+  const tsEl = document.getElementById('rateTimestamp');
+  if (tsEl) {
+    const cached = localStorage.getItem(CURRENCY_CONFIG.cacheKey);
+    tsEl.textContent = cached
+      ? new Date(JSON.parse(cached).timestamp).toLocaleTimeString()
+      : 'just now';
+  }
+}
+
+/* ════════════════════════════════════════
+   TOOLTIP EDGE DETECTION
+════════════════════════════════════════ */
+function initTooltipEdgeDetection() {
+  document.querySelectorAll('.package-price').forEach(priceEl => {
+    const tooltip = priceEl.querySelector('.currency-tooltip');
+    if (!tooltip) return;
+
+    priceEl.addEventListener('mouseenter', () => {
+      // Small delay to let tooltip render
+      setTimeout(() => {
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+
+        // If tooltip bottom goes beyond viewport, flip it below
+        if (tooltipRect.bottom > viewportHeight - 20) {
+          tooltip.classList.add('flipped');
+        } else {
+          tooltip.classList.remove('flipped');
+        }
+      }, 50);
+    });
+
+    priceEl.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('flipped');
+    });
+  });
+}
+
+// Mobile tap support
+document.addEventListener('click', (e) => {
+  const priceEl = e.target.closest('.package-price');
+  if (!priceEl) {
+    // Close all tooltips if clicking outside
+    document.querySelectorAll('.package-price.active').forEach(el => {
+      el.classList.remove('active');
+    });
+    return;
+  }
+
+  // Toggle active state on mobile
+  if (window.matchMedia('(hover: none)').matches) {
+    const isActive = priceEl.classList.contains('active');
+    document.querySelectorAll('.package-price.active').forEach(el => {
+      el.classList.remove('active');
+    });
+    if (!isActive) {
+      priceEl.classList.add('active');
+    }
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  initCurrencyConverter();
+  initTooltipEdgeDetection(); // ← Add this
+});
+
+/* ════════════════════════════════════════
+   PAYPAL CONFIGURATION — EDIT THIS
+════════════════════════════════════════ */
+const PAYPAL_EMAIL = 'terraserver05@yahoo.com';
+const PAYPAL_CURRENCY = 'USD';
+const PAYPAL_NO_NOTE = 1;
+
+/* ════════════════════════════════════════
+   PAYPAL LINK GENERATOR
+════════════════════════════════════════ */
+function buildPaypalLink(amount, itemName) {
+  const base = 'https://www.paypal.com/cgi-bin/webscr';
+  const params = new URLSearchParams({
+    cmd: '_donations',
+    business: PAYPAL_EMAIL,
+    item_name: `Last Oasis Clan — ${itemName}`,
+    amount: amount,
+    currency_code: PAYPAL_CURRENCY,
+    no_note: PAYPAL_NO_NOTE,
+    bn: 'PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest'
+  });
+  return `${base}?${params.toString()}`;
+}
+
+/* ════════════════════════════════════════
+   MODAL LOGIC
+════════════════════════════════════════ */
+const modal = {
+  backdrop: document.getElementById('confirmModal'),
+  amountEl: document.getElementById('modalAmount'),
+  itemEl: document.getElementById('modalItem'),
+  check: document.getElementById('confirmCheck'),
+  confirmBtn: document.getElementById('modalConfirm'),
+  cancelBtn: document.getElementById('modalCancel'),
+  closeBtn: document.getElementById('modalClose'),
+
+  pendingUrl: null,
+
+  open(amount, itemName, url) {
+    this.amountEl.textContent = `$${amount}`;
+    this.itemEl.textContent = itemName;
+    this.check.checked = false;
+    this.confirmBtn.disabled = true;
+    this.pendingUrl = url;
+    this.backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    this.check.focus();
+  },
+
+  close() {
+    this.backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    this.pendingUrl = null;
+  },
+
+  proceed() {
+    if (this.pendingUrl) {
+      window.open(this.pendingUrl, '_blank', 'noopener,noreferrer');
+    }
+    this.close();
+  }
+};
+
+// Checkbox toggle
+modal.check.addEventListener('change', (e) => {
+  modal.confirmBtn.disabled = !e.target.checked;
+});
+
+// Close handlers
+modal.closeBtn.addEventListener('click', () => modal.close());
+modal.cancelBtn.addEventListener('click', () => modal.close());
+modal.backdrop.addEventListener('click', (e) => {
+  if (e.target === modal.backdrop) modal.close();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.backdrop.classList.contains('open')) {
+    modal.close();
+  }
+});
+
+// Confirm button
+modal.confirmBtn.addEventListener('click', () => {
+  if (modal.check.checked) {
+    modal.proceed();
+  }
+});
+
+/* ════════════════════════════════════════
+   ATTACH CLICK HANDLERS TO DONATE BUTTONS
+════════════════════════════════════════ */
+document.querySelectorAll('.btn-donate').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const amount = btn.dataset.amount;
+    const name = btn.dataset.name;
+    const url = buildPaypalLink(amount, name);
+    modal.open(amount, name, url);
+  });
+});
+</script>
+</body>
+</html>
