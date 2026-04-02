@@ -143,55 +143,11 @@ body {
   -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
-/* Overlay text on banner (desktop: overlaid, mobile: below) */
-.banner-overlay {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  padding: 12px 24px;
-  background: rgba(4,6,15,0.6);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--r);
-  backdrop-filter: var(--blur);
-  max-width: 90%;
-  transition: all 0.3s ease;
-}
-
 /* ─── MOBILE: Move overlay BELOW banner at 900px and under ─── */
 @media (max-width: 900px) {
-  .banner-overlay {
-    position: static;        /* Remove absolute positioning */
-    transform: none;         /* Reset centering transform */
-    margin: 16px auto 0;     /* Add spacing below banner */
-    max-width: 90%;          /* Keep width constrained */
-    padding: 14px 20px;
-  }
-
   .banner-wrap {
     padding-bottom: 0;       /* Reset any bottom padding */
   }
-}
-
-.banner-title {
-  font-family: var(--font-d);
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  font-weight: 900;
-  letter-spacing: 2px;
-  color: #fff;
-  margin-bottom: 4px;
-}
-.banner-title span {
-  background: linear-gradient(135deg, var(--amber), var(--amber2), var(--teal));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.banner-sub {
-  font-size: 13px;
-  color: var(--text-dim);
-  font-weight: 300;
 }
 
 /* Note box below banner */
@@ -371,13 +327,6 @@ footer span { color: var(--amber); }
   .packages { padding: 16px 16px 40px; }
   .banner-note { padding: 0 16px; }
   .btn-donate { width: 100%; justify-content: center; }
-  .banner-overlay {
-    bottom: 12px;
-    padding: 8px 16px;
-    max-width: 95%;
-  }
-  .banner-title { font-size: 1.3rem; }
-  .banner-sub { font-size: 11px; }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -795,11 +744,6 @@ footer span { color: var(--amber); }
         class="banner"
       />
     </picture>
-    <!-- Optional overlay text — delete this entire div if you want pure image -->
-    <div class="banner-overlay">
-      <div class="banner-title">Clan <span>Packages</span></div>
-      <div class="banner-sub">Voluntary donations • In-game delivery • All walkers fully upgraded</div>
-    </div>
   </div>
 
   <!-- Note below banner -->
