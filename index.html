@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Last Oasis — Clan Packages</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
-<script>
-// 🧹 ONE-TIME CACHE CLEAR — remove this line after first load
-localStorage.removeItem('lo_clan_rates');
-</script>
 <style>
 /* ═══════════════════════════════════════════════════════
    ROOT & RESET
@@ -811,8 +807,8 @@ footer span { color: var(--amber); }
   <div class="banner-note">
     <div class="note">
       <p>⚠️ <strong>Note:</strong> All walkers are fully upgraded with gold legs & wings. Leg & wing types are buyer's choice.</p><br>
-      <p>⚠️ <strong>Note:</strong> One resource credit can be traded for 1 resource of your choosing. It's a 1 to 1 trade.<br>
-      ‼️ Be sure to know what resources and how much of each you want. ‼️</p>
+      <p>⚠️ <strong>Note:</strong> One resource credit can be traded for 1 resource fo your choosing. It's a 1 to 1 trade.<br>
+      ‼️ Be sure to know what you want for your resources and how much of each. ‼️</p>
     </div>
     <div style="margin-top:8px;font-size:12px;color:var(--text-xs);font-style:italic">
       💱 Currency rates update automatically • Last updated: <span id="rateTimestamp">loading...</span>
@@ -835,7 +831,7 @@ footer span { color: var(--amber); }
           </div>
         </div>
         <ul class="package-contents">
-          <li>2,000 Gold Resource Credits</li>
+          <li>1,000 Gold Resource Credits</li>
           <li>1x Gold Ceramic Tool Set (Pickaxe, Axe, Sickle)</li>
           <li>1x Gold Large Chest</li>
         </ul>
@@ -878,14 +874,32 @@ footer span { color: var(--amber); }
         <ul class="package-contents">
           <li>100 Modules of your choice</li>
         </ul>
-        <a href="#" class="btn-donate" data-amount="5" data-name="The Warrior's Boost">
+        <a href="#" class="btn-donate" data-amount="5" data-name="The Module Booster">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
+      <div class="package-card" style="animation-delay:0.1s">
+        <span class="tier-badge tier-1">Tier 1 • $5</span>
+        <div class="package-name">4. The Resource Boost</div>
+        <div class="package-price" data-usd="5">
+          $5
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>2,500 Gold Resource Credits</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="5" data-name="The Resource Boost">
           💳 Donate via PayPal
         </a>
       </div>
 
       <div class="package-card" style="animation-delay:0.15s">
         <span class="tier-badge tier-1">Tier 1 • $7</span>
-        <div class="package-name">4. The Spider Walker Credit</div>
+        <div class="package-name">5. The Spider Walker Credit</div>
         <div class="package-price" data-usd="7">
           $7
           <div class="currency-tooltip">
@@ -894,7 +908,7 @@ footer span { color: var(--amber); }
           </div>
         </div>
         <ul class="package-contents">
-          <li>3,000 Gold Resource Credits</li>
+          <li>2,000 Gold Resource Credits</li>
           <li>1x Spider Walker <span style="color:var(--text-xs)">⬡ fully upgraded, gold legs & wings</span></li>
           <li>1x Gold Large Chest</li>
         </ul>
@@ -906,7 +920,7 @@ footer span { color: var(--amber); }
       <!-- Tier 2: $10-$12 -->
       <div class="package-card" style="animation-delay:0.2s">
         <span class="tier-badge tier-2">Tier 2 • $10</span>
-        <div class="package-name">5. The Fighter's Stash</div>
+        <div class="package-name">6. The Fighter's Stash</div>
         <div class="package-price" data-usd="10">
           $10
           <div class="currency-tooltip">
@@ -915,7 +929,7 @@ footer span { color: var(--amber); }
           </div>
         </div>
         <ul class="package-contents">
-          <li>5,000 Gold Resource Credits</li>
+          <li>4,000 Gold Resource Credits</li>
           <li>2x Iron Weapon of Choice</li>
           <li>1x Armor Set of your choice (excl. Nibirum)</li>
           <li>1x Gold Large Chest</li>
@@ -927,7 +941,7 @@ footer span { color: var(--amber); }
 
       <div class="package-card" style="animation-delay:0.25s">
         <span class="tier-badge tier-2">Tier 2 • $10</span>
-        <div class="package-name">6. The Walker Credit</div>
+        <div class="package-name">7. The Walker Credit</div>
         <div class="package-price" data-usd="10">
           $10
           <div class="currency-tooltip">
@@ -936,7 +950,7 @@ footer span { color: var(--amber); }
           </div>
         </div>
         <ul class="package-contents">
-          <li>5,000 Gold Resource Credits</li>
+          <li>4,000 Gold Resource Credits</li>
           <li>1x Dinghy, Mollusk, Stiletto, or Balang Walker <span style="color:var(--text-xs)">⬡ w/ T3 RIG, gold legs & wings</span></li>
           <li>1x Gold Large Chest</li>
         </ul>
@@ -947,7 +961,7 @@ footer span { color: var(--amber); }
 
       <div class="package-card" style="animation-delay:0.3s">
         <span class="tier-badge tier-2">Tier 2 • $12</span>
-        <div class="package-name">7. The Shopping Cart</div>
+        <div class="package-name">8. The Shopping Cart</div>
         <div class="package-price" data-usd="12">
           $12
           <div class="currency-tooltip">
@@ -956,7 +970,7 @@ footer span { color: var(--amber); }
           </div>
         </div>
         <ul class="package-contents">
-          <li>6,000 Gold Resource Credits</li>
+          <li>5,000 Gold Resource Credits</li>
           <li>1x Toboggan Walker <span style="color:var(--text-xs)">⬡ w/ T3 RIG, gold legs & wings</span></li>
           <li>1x Gold Large Chest</li>
         </ul>
@@ -968,7 +982,7 @@ footer span { color: var(--amber); }
       <!-- Tier 3: $15-$17 -->
       <div class="package-card" style="animation-delay:0.35s">
         <span class="tier-badge tier-3">Tier 3 • $15</span>
-        <div class="package-name">8. The Raptor</div>
+        <div class="package-name">9. The Raptor</div>
         <div class="package-price" data-usd="15">
           $15
           <div class="currency-tooltip">
@@ -989,7 +1003,7 @@ footer span { color: var(--amber); }
 
       <div class="package-card" style="animation-delay:0.4s">
         <span class="tier-badge tier-3">Tier 3 • $17</span>
-        <div class="package-name">9. The Turtle Walker Credit</div>
+        <div class="package-name">10. The Turtle Walker Credit</div>
         <div class="package-price" data-usd="17">
           $17
           <div class="currency-tooltip">
@@ -998,7 +1012,7 @@ footer span { color: var(--amber); }
           </div>
         </div>
         <ul class="package-contents">
-          <li>10,000 Gold Resource Credits</li>
+          <li>8,000 Gold Resource Credits</li>
           <li>1x Silur Walker <span style="color:var(--text-xs)">⬡ fully upgraded, gold legs & wings</span></li>
           <li>1x Gold Gigantic Chest</li>
         </ul>
@@ -1010,7 +1024,7 @@ footer span { color: var(--amber); }
       <!-- Tier 4: $20 -->
       <div class="package-card" style="animation-delay:0.45s">
         <span class="tier-badge tier-4">Tier 4 • $20</span>
-        <div class="package-name">10. The Clan Leader's Cache</div>
+        <div class="package-name">11. The Clan Leader's Cache</div>
         <div class="package-price" data-usd="20">
           $20
           <div class="currency-tooltip">
@@ -1019,7 +1033,7 @@ footer span { color: var(--amber); }
           </div>
         </div>
         <ul class="package-contents">
-          <li>15,000 Gold Resource Credits</li>
+          <li>12,500 Gold Resource Credits</li>
           <li>1x Choice of Buffalo, Falco, or Hornet Walker <span style="color:var(--text-xs)">⬡ fully upgraded, gold legs & wings</span></li>
           <li>100 Modules of your choice</li>
           <li>1x Gold Gigantic Chest</li>
@@ -1029,10 +1043,38 @@ footer span { color: var(--amber); }
         </a>
       </div>
 
+      <!-- Tier 4: $30 -->
+      <div class="package-card" style="animation-delay:0.45s">
+        <span class="tier-badge tier-4">Tier 4 • $35</span>
+        <div class="package-name">12. The Builders Box</div>
+        <div class="package-price" data-usd="35">
+          $35
+          <div class="currency-tooltip">
+            <div class="currency-tooltip-title">💱 Convert to Your Currency</div>
+            <div class="tooltip-loading">Loading rates</div>
+          </div>
+        </div>
+        <ul class="package-contents">
+          <li>2x Artisan Fiberworking Station</li>
+          <li>2x Artiificer Woodworking Station</li>
+          <li>2x Flotillian Stomping Station</li>
+          <li>2x Clay Pot</li>
+          <li>2x Advanced Furnace</li>
+          <li>1x Blacksmith Station</li>
+          <li>1x Curing Station</li>
+          <li>1x Crafting Bench</li>
+          <li>1x Purification Station</li>
+          <li>1x Dyeing Station</li>
+        </ul>
+        <a href="#" class="btn-donate" data-amount="35" data-name="The Builders Box">
+          💳 Donate via PayPal
+        </a>
+      </div>
+
       <!-- Tier 5: $50 -->
       <div class="package-card" style="animation-delay:0.5s">
         <span class="tier-badge tier-5">Tier 5 • $50</span>
-        <div class="package-name">11. The End Game Cache</div>
+        <div class="package-name">13. The End Game Cache</div>
         <div class="package-price" data-usd="50">
           $50
           <div class="currency-tooltip">
@@ -1041,7 +1083,7 @@ footer span { color: var(--amber); }
           </div>
         </div>
         <ul class="package-contents">
-          <li>50,000 Gold Resource Credits</li>
+          <li>45,000 Gold Resource Credits</li>
           <li>1x Choice of Titian, Schmetterling, Domus, or Tusker Walker <span style="color:var(--text-xs)">⬡ fully upgraded, gold legs & wings</span></li>
           <li>100 Modules of your choice</li>
           <li>3x Gold Gigantic Chests</li>
